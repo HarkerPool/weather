@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.harkerpoul.weatherforecast.R
 import com.harkerpoul.weatherforecast.data.model.Weather
 import com.harkerpoul.weatherforecast.databinding.LayoutWeatherItemBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class WeatherAdapter : ListAdapter<Weather, WeatherAdapter.WeatherViewHolder>(DiffCallback) {
     companion object {
@@ -16,7 +18,7 @@ class WeatherAdapter : ListAdapter<Weather, WeatherAdapter.WeatherViewHolder>(Di
                 oldItem == newItem
 
             override fun areContentsTheSame(oldItem: Weather, newItem: Weather): Boolean =
-                oldItem.date == newItem.date
+                oldItem.dt == newItem.dt
         }
     }
 
@@ -24,7 +26,9 @@ class WeatherAdapter : ListAdapter<Weather, WeatherAdapter.WeatherViewHolder>(Di
         RecyclerView.ViewHolder(binding.root) {
         fun bind(weather: Weather) {
             binding.tvDate.apply {
-                text = context.getString(R.string.date, weather.date)
+                val format = SimpleDateFormat("E, dd MMM yyyy", Locale.getDefault())
+                val date = format.format(weather.dt * 1000L)
+                text = context.getString(R.string.date, date)
             }
             binding.tvTemperature.apply {
                 text = context.getString(R.string.average_temperature, weather.averageTemperature)

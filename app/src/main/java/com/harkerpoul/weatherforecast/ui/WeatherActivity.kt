@@ -14,7 +14,9 @@ import com.harkerpoul.weatherforecast.common.BaseResult
 import com.harkerpoul.weatherforecast.data.model.Weather
 import com.harkerpoul.weatherforecast.databinding.ActivityWeatherBinding
 import com.harkerpoul.weatherforecast.utils.hideKeyboard
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WeatherActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWeatherBinding
@@ -94,6 +96,9 @@ class WeatherActivity : AppCompatActivity() {
         viewModel.getWeatherForecast(binding.edtCity.text.toString(), 7)
     }
 
+    /**
+     * Handle weather forecast
+     */
     private fun handleWeatherForecast(result: BaseResult<List<Weather>>) {
         when (result) {
             is BaseResult.Loading -> {
