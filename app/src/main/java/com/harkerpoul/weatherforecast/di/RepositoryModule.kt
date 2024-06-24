@@ -17,9 +17,9 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideRepository(
-        dataSource: NetworkWeatherDatasource,
-        localDataSource: LocalWeatherDatasource
+        networkDatasource: NetworkWeatherDatasource,
+        localDatasource: LocalWeatherDatasource
     ): WeatherRepository {
-        return WeatherRepositoryImpl(dataSource, localDataSource)
+        return WeatherRepositoryImpl(networkDatasource, localDatasource)
     }
 }
