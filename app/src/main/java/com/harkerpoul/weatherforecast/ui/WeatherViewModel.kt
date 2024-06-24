@@ -42,11 +42,6 @@ class WeatherViewModel @Inject constructor(
 
         job.invokeOnCompletion {
             Log.e("WeatherViewModel", it?.message ?: "invokeOnCompletion")
-            if (it == null) {
-                // Success
-            } else {
-                // Error
-            }
         }
     }
 }
