@@ -93,7 +93,11 @@ class WeatherActivity : AppCompatActivity() {
             return
         }
         hideKeyboard()
-        viewModel.getWeatherForecast(binding.edtCity.text.toString(), 7)
+        viewModel.getWeatherForecast(
+            cityName = binding.edtCity.text.toString(),
+            units = "metric",
+            numberOfDays = 7
+        )
     }
 
     /**

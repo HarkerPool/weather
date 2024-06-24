@@ -9,14 +9,19 @@ class NetworkWeatherDatasourceImpl @Inject constructor(
 ) : NetworkWeatherDatasource {
     override suspend fun getWeatherForecastDaily(
         cityName: String,
+        units: String,
         numberOfDays: Int
     ): NetworkWeatherDaily? {
-        val response = api.getWeatherForecastDaily(cityName, numberOfDays)
+        try {
+            val response = api.getWeatherForecastDaily(cityName, units, numberOfDays)
 
-        if (response.isSuccessful) {
-            return response.body()
-        } else {
-            throw Exception("Failed to fetch weather forecast data")
+            if (response.isSuccessful) {
+                return response.body()
+            } else {
+                throw Exception("Failed to fetch weather forecast data, status code: ${response.code()}, message: ${response.message()}")
+            }
+        } catch (e: Exception) {
+            throw Exception("Failed to fetch weather forecast data: ${e.message}")
         }
     }
 }

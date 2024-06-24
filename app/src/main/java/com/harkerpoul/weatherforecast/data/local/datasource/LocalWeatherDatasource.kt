@@ -8,5 +8,4 @@ interface LocalWeatherDatasource {
     suspend fun getWeatherForecastDaily(cityName: String, numberOfDays: Int): List<Weather>?
 
     suspend fun saveWeatherIntoDB(cityEntity: CityEntity, weatherEntityList: List<WeatherEntity>)
-
 }

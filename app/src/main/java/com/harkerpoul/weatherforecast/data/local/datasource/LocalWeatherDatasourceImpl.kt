@@ -25,10 +25,10 @@ class LocalWeatherDatasourceImpl @Inject constructor(
                 val weatherList =
                     appDatabase.weatherDao().getWeatherByCityId(cityEntity.id, numberOfDays)
 
-                if (weatherList.isNullOrEmpty()) {
-                    return null
+                return if (weatherList.isNullOrEmpty()) {
+                    null
                 } else {
-                    return weatherList.map {
+                    weatherList.map {
                         it.toWeather()
                     }
                 }

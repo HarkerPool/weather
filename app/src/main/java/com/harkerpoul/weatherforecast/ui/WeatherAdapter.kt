@@ -31,7 +31,8 @@ class WeatherAdapter : ListAdapter<Weather, WeatherAdapter.WeatherViewHolder>(Di
                 text = context.getString(R.string.date, date)
             }
             binding.tvTemperature.apply {
-                text = context.getString(R.string.average_temperature, weather.averageTemperature)
+                val averageTemperature = ((weather.temp.min + weather.temp.max) / 2).toInt()
+                text = context.getString(R.string.average_temperature, averageTemperature)
             }
             binding.tvPressure.apply {
                 text = context.getString(R.string.pressure, weather.pressure)
@@ -40,7 +41,7 @@ class WeatherAdapter : ListAdapter<Weather, WeatherAdapter.WeatherViewHolder>(Di
                 text = context.getString(R.string.humidity, "${weather.humidity}%")
             }
             binding.tvDescription.apply {
-                text = context.getString(R.string.description, weather.description)
+                text = context.getString(R.string.description, weather.weather[0].description)
             }
         }
     }

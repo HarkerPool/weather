@@ -25,10 +25,11 @@ fun NetworkWeatherDaily.toWeatherEntityList(cityId: Int): List<WeatherEntity> {
         WeatherEntity(
             dt = it.dt,
             cityId = cityId,
-            averageTemperature = it.averageTemperature,
+            tempMin = it.temp.min.toInt(),
+            tempMax = it.temp.max.toInt(),
             pressure = it.pressure,
             humidity = it.humidity,
-            description = it.description
+            description = it.weather[0].description
         )
     }
 }
@@ -37,10 +38,10 @@ fun NetworkWeatherDaily.toWeatherList(): List<Weather> {
     return list.map {
         Weather(
             dt = it.dt,
-            averageTemperature = it.averageTemperature,
+            temp = it.temp,
             pressure = it.pressure,
             humidity = it.humidity,
-            description = it.description
+            weather = it.weather
         )
     }
 }

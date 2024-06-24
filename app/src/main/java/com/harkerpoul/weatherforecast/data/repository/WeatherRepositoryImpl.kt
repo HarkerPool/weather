@@ -20,24 +20,26 @@ class WeatherRepositoryImpl @Inject constructor(
 ) : WeatherRepository {
     override suspend fun getWeatherForecastDaily(
         cityName: String,
+        units: String,
         numberOfDays: Int
     ): List<Weather>? {
         return withContext(dispatcher) {
             try {
                 // Get data from DB
-                val dbValues = localDatasource.getWeatherForecastDaily(cityName, numberOfDays)
+                val dbValues =
+                    localDatasource.getWeatherForecastDaily(cityName, numberOfDays)
                 if (!dbValues.isNullOrEmpty()) {
                     return@withContext dbValues
                 }
 
                 // Get data from API
                 val networkValues =
-                    networkDatasource.getWeatherForecastDaily(cityName, numberOfDays)
+                    networkDatasource.getWeatherForecastDaily(cityName, units, numberOfDays)
                 if (networkValues != null && networkValues.cod == "200") {
                     val cityEntity = networkValues.toCityEntity(cityName)
                     val weatherEntityList = networkValues.toWeatherEntityList(cityEntity.id)
                     // Save data to DB
-                    launch(dispatcher) {
+                    launch {
                         localDatasource.saveWeatherIntoDB(cityEntity, weatherEntityList)
                     }
 
